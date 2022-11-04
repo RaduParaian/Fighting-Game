@@ -19,11 +19,13 @@ const background = new Sprite({
 
 const shop = new Sprite({
     position: {
-        x: 0,
-        y: 0
+        x: 625,
+        y: 128
+
     },
     imageSrc: './img/shop.png',
-    scale: 2.75
+    scale: 2.75,
+    framesMax: 6
 })
 
 const player = new Fighter({
@@ -117,7 +119,7 @@ function animate() {
     }) &&
         player.isAttacking) {
         player.isAttacking = false
-        enemy.health -= 20
+        enemy.health -= 10
         document.querySelector('#enemyHealth').style.width = enemy.health + '%'
     }
 
@@ -127,7 +129,7 @@ function animate() {
     }) &&
         enemy.isAttacking) {
         enemy.isAttacking = false
-        player.health -= 20
+        player.health -= 10
         document.querySelector('#playerHealth').style.width = player.health + '%'
     }
 

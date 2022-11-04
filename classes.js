@@ -1,25 +1,42 @@
 //sprite class
 class Sprite {
-    constructor({ position, imageSrc, scale = 1 }) {
+    constructor({ position, imageSrc, scale = 1, framesMax = 1 }) {
         this.position = position
         this.width = 50
         this.height = 150
         this.image = new Image()
         this.image.src = imageSrc
         this.scale = scale
+        this.framesMax = framesMax
+        this.framesCurrent = 0
+        this.framesElapsed = 0
+        this.framesHold = 5
     }
 
     draw() {
-        c.drawImage(this.image, this.position.x, this.position.y, this.image.width * this.scale, this.image.height * this.scale)
+        c.drawImage(this.image, this.framesCurrent * (this.image.width / this.framesMax), 0, this.image.width / this.framesMax, this.image.height, this.position.x, this.position.y, (this.image.width / this.framesMax) * this.scale, this.image.height * this.scale)
     }
     update() {
         this.draw()
+        this.framesElapsed++
+
+        if (this.framesElapsed % this.framesHold === 0)
+
+            if (this.framesCurrent < this.framesMax - 1) {
+                this.framesCurrent++
+            } else {
+                this.framesCurrent = 0
+            }
     }
 }
 
 //fighter class
-class Fighter {
-    constructor({ position, velocity, color = 'red', offset }) {
+class Fighter extends Sprite {
+    constructor({ position, velocity, color = 'red', offset, imageSrc, scale = 1, framesMax = 1 }) {
+        super({
+
+        })
+
         this.position = position
         this.velocity = velocity
         this.width = 50
@@ -37,17 +54,6 @@ class Fighter {
         this.color = color
         this.isAttacking
         this.health = 100
-    }
-
-    draw() {
-        c.fillStyle = this.color
-        c.fillRect(this.position.x, this.position.y, 50, this.height)
-
-        //attack
-        if (this.isAttacking) {
-            c.fillStyle = 'green'
-            c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
-        }
     }
 
     update() {
