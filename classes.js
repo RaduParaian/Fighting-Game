@@ -1,15 +1,16 @@
 //sprite class
 class Sprite {
-    constructor({ position, imageSrc }) {
+    constructor({ position, imageSrc, scale = 1 }) {
         this.position = position
         this.width = 50
         this.height = 150
         this.image = new Image()
         this.image.src = imageSrc
+        this.scale = scale
     }
 
     draw() {
-        c.drawImage(this.image, this.position.x, this.position.y)
+        c.drawImage(this.image, this.position.x, this.position.y, this.image.width * this.scale, this.image.height * this.scale)
     }
     update() {
         this.draw()
@@ -57,7 +58,7 @@ class Fighter {
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
 
-        if (this.position.y + this.height + this.velocity.y >= canvas.height) {
+        if (this.position.y + this.height + this.velocity.y >= canvas.height - 96) {
             this.velocity.y = 0
         } else {
             this.velocity.y += gravity
