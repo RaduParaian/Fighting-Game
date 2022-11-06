@@ -34,10 +34,9 @@ class Sprite {
 class Fighter extends Sprite {
     constructor({ position, velocity, color = 'red', offset, imageSrc, scale = 1, framesMax = 1 }) {
         super({
-
+            position, imageSrc, scale, framesMax
         })
 
-        this.position = position
         this.velocity = velocity
         this.width = 50
         this.height = 150
@@ -54,6 +53,9 @@ class Fighter extends Sprite {
         this.color = color
         this.isAttacking
         this.health = 100
+        this.framesCurrent = 0
+        this.framesElapsed = 0
+        this.framesHold = 5
     }
 
     update() {
