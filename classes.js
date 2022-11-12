@@ -15,17 +15,22 @@ class Sprite {
     }
 
     draw() {
-        c.drawImage(
-            this.image,
-            this.framesCurrent * (this.image.width / this.framesMax),
-            0, this.image.width / this.framesMax, this.image.height,
-            this.position.x - this.offset.x, this.position.y - this.offset.y,
-            (this.image.width / this.framesMax) * this.scale,
-            this.image.height * this.scale
-        )
+        try {
+            c.drawImage(
+                this.image,
+                this.framesCurrent * (this.image.width / this.framesMax),
+                0, this.image.width / this.framesMax, this.image.height,
+                this.position.x - this.offset.x, this.position.y - this.offset.y,
+                (this.image.width / this.framesMax) * this.scale,
+                this.image.height * this.scale
+            )    
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
-    update() {
-        this.draw()
+
+    animateFrame() {
         this.framesElapsed++
 
         if (this.framesElapsed % this.framesHold === 0)
@@ -36,11 +41,16 @@ class Sprite {
                 this.framesCurrent = 0
             }
     }
+
+    update() {
+        this.draw()
+        this.animateFrame()
+    }
 }
 
 //fighter class
 class Fighter extends Sprite {
-    constructor({ position, velocity, color = 'red', offset, imageSrc, scale = 1, framesMax = 1, offset = { x: 0, y: 0 } }) {
+    constructor({ position, velocity, color = 'red', imageSrc, scale = 1, framesMax = 1, offset = { x: 0, y: 0 }, sprites }) {
         super({
             position, imageSrc, scale, framesMax, offset
         })
@@ -64,10 +74,17 @@ class Fighter extends Sprite {
         this.framesCurrent = 0
         this.framesElapsed = 0
         this.framesHold = 5
+        this.sprites = sprites
+
+        for (const sprite in this.sprites) {
+            sprites[sprite].image = new Image()
+            sprites[sprite].image = sprites[sprite].imageSrc
+        }
     }
 
     update() {
         this.draw()
+        this.animateFrame()
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x
         this.attackBox.position.y = this.position.y
 

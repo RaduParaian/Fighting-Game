@@ -1,3 +1,3 @@
 # FightingGame
 
-video timer: 1:56:10
+video timer: 2:40:50
