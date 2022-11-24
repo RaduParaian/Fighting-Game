@@ -19,15 +19,18 @@ class Sprite {
             c.drawImage(
                 this.image,
                 this.framesCurrent * (this.image.width / this.framesMax),
-                0, this.image.width / this.framesMax, this.image.height,
-                this.position.x - this.offset.x, this.position.y - this.offset.y,
+                0,
+                this.image.width / this.framesMax,
+                this.image.height,
+                this.position.x - this.offset.x,
+                this.position.y - this.offset.y,
                 (this.image.width / this.framesMax) * this.scale,
                 this.image.height * this.scale
-            )    
+            )
         } catch (error) {
             console.log(error);
         }
-        
+
     }
 
     animateFrame() {
@@ -78,7 +81,7 @@ class Fighter extends Sprite {
 
         for (const sprite in this.sprites) {
             sprites[sprite].image = new Image()
-            sprites[sprite].image = sprites[sprite].imageSrc
+            sprites[sprite].image.src = sprites[sprite].imageSrc
         }
     }
 
@@ -103,5 +106,28 @@ class Fighter extends Sprite {
         setTimeout(() => {
             this.isAttacking = false
         }, 100)
+    }
+
+    switchSprite(Sprite) {
+        switch (sprite) {
+            case 'idle':
+                if (this.image !== this.sprites.idle.image) {
+                    this.image = this.sprites.idle.image
+                    player.framesMax = player.sprites.idle.framesMax
+                }
+                break;
+            case 'run':
+                if (this.image !== this.sprites.run.image) {
+                    player.image = player.sprites.run.image
+                    player.framesMax = player.sprites.run.framesMax
+                }
+                break;
+            case 'jump':
+                if (this.image !== this.sprites.jump.image) {
+                    player.image = player.sprites.jump.image
+                    player.framesMax = player.sprites.jump.framesMax
+                }
+                break;
+        }
     }
 }
